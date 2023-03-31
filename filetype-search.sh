@@ -4,7 +4,7 @@
 # Author: Corey Calhoun
 # Date: 03-31-2023
 # Description: Filetype search for AWS S3 buckets.
-# Usage: ./filetype-serach.sh <bucket_name> <file_type> <local_dir>
+# Usage: ./filetype-serach.sh 
 ################################################################################
 
 bucket_name="my-s3-bucket"
