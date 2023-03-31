@@ -21,14 +21,9 @@ search_results=$(aws s3 ls s3://$bucket_name | grep ".$file_type")
 
 # Check if files were found
 if [[ -n $search_results ]]; then
-  # Loop through the search results
-  while read -r line; do
-    # Get the file name
-    file_name=$(echo $line | awk '{print $4}')
-
-    # Copy the file to the destination directory
-    aws s3 cp s3://$bucket_name/$file_name $destination_dir
-  done <<< "$search_results"
+  echo "Copying files with .$file_type extension to $destination_dir..."
+    # List the files and copy them to the destination directory
+    aws s3 ls s3://$bucket_name | grep ".$file_type" | awk '{print $4}' | xargs -I {} aws s3 cp s3://$bucket_name/{} $destination_dir
 else
-  echo "No files found."
+  echo "No files found with extension .$file_type"
 fi 
