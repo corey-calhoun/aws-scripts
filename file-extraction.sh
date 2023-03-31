@@ -21,9 +21,10 @@ search_results=$(aws s3 ls s3://$bucket_name | grep ".$file_type")
 
 # Check if files were found
 if [[ -n $search_results ]]; then
+  # Print a message to user
   echo "Copying files with .$file_type extension to $destination_dir..."
     # List the files and copy them to the destination directory
-    aws s3 ls s3://$bucket_name | grep ".$file_type" | awk '{print $4}' | xargs -I {} aws s3 cp s3://$bucket_name/{} $destination_dir
+    aws s3 ls s3://$bucket_name --recursive | grep ".$file_type" | awk '{print $4}' | xargs -I {} aws s3 cp s3://$bucket_name/{} $destination_dir
 else
   echo "No files found with extension .$file_type"
 fi 
